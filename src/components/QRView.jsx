@@ -25,6 +25,12 @@ const QRView = () => {
   const location = useLocation();
 
   useEffect(() => {
+    if (!token) {
+      navigate("/", { replace: true });
+    }
+  }, [token, navigate]);
+
+  useEffect(() => {
     if (location.state?.autoReturn) {
       const timer = setTimeout(() => {
         navigate("/qrscanner");
