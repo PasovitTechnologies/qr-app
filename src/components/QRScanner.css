@@ -29,7 +29,7 @@
 
 .header-icon {
   font-size: 1.8rem;
-  color: #3498db;
+  color: #033672;
 }
 
 .instruction-text {
@@ -70,7 +70,7 @@
   position: absolute;
   width: 30px;
   height: 30px;
-  border-color: #3498db;
+  border-color: #033672;
   border-width: 3px;
   border-style: none;
 }
@@ -115,7 +115,7 @@
   height: 3px;
   background: linear-gradient(to right, transparent, #3498db, transparent);
   animation: scan-animation 2.5s linear infinite;
-  box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+  box-shadow: 0 0 10px rgba(15, 15, 101, 0.5);
 }
 
 @keyframes scan-animation {
@@ -159,7 +159,7 @@
   align-items: center;
   gap: 8px;
   margin-top: 1rem;
-  color: #3498db;
+  color: #033672;
   font-weight: 500;
 }
 
@@ -212,7 +212,7 @@
 }
 
 .camera-toggle {
-  background-color: #3498db;
+  background-color: #033672;
   color: white;
 }
 
@@ -267,7 +267,7 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: #3498db;
+  background-color: #033672;
   animation: dot-pulse 1.5s infinite ease-in-out;
 }
 

@@ -82,7 +82,7 @@ body{
   }
   
   .login-btn {
-    background: linear-gradient(to right, #667eea, #764ba2);
+    background: #033672;
     color: white;
     border: none;
     padding: 15px;
@@ -95,7 +95,7 @@ body{
   }
   
   .login-btn:hover {
-    background: linear-gradient(to right, #5a6fd1, #6a4295);
+    background: #051a33;
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
   }
   
