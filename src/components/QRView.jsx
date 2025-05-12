@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { 
   FiUser, FiBook, FiDollarSign, 
@@ -21,7 +21,18 @@ const QRView = () => {
   const token = localStorage.getItem("token");
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
-  
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.autoReturn) {
+      const timer = setTimeout(() => {
+        navigate("/qrscanner");
+      }, 5000); // 5 seconds (or any time you want)
+      return () => clearTimeout(timer);
+    }
+  }, [navigate, location]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -32,10 +32,17 @@ export default function QRScanner() {
     if (data && data.text) {
       setScannedData(data.text);
       setStatus('success');
+
       if (isValidUrl(data.text)) {
         setShowRedirect(true);
         setTimeout(() => {
-          window.location.href = data.text;
+          if (data.text.startsWith('http') || data.text.startsWith('https')) {
+            // Full URL (external)
+            window.location.href = data.text;
+          } else {
+            // Relative path (internal)
+            navigate(data.text);
+          }
         }, 2000);
       }
     }
@@ -49,7 +56,9 @@ export default function QRScanner() {
 
   const isValidUrl = (string) => {
     try {
-      new URL(string);
+      // Accept internal routes as well (like "/qrscanner/view/...")
+      if (string.startsWith('/')) return true;
+      new URL(string); // Check if it's a valid absolute URL
       return true;
     } catch (_) {
       return false;

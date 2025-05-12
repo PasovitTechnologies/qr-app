@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/Navbar";
 import QRScanner from "./components/QRScanner";
 import QRView from "./components/QRView";
@@ -34,7 +34,7 @@ const App = () => {
   // Handle successful login
   const handleSuccessfulLogin = () => {
     setIsAuthenticated(true);
-    navigate('/qrscanner');
+    navigate("/qrscanner");
   };
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const App = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("userRole");
         localStorage.removeItem("userEmail");
-        navigate('/');
+        navigate("/");
       }
     }, 60000);
 
@@ -64,7 +64,10 @@ const App = () => {
             <div className="main-content">
               <Routes>
                 <Route path="/qrscanner" element={<QRScanner />} />
-                <Route path="/qrscanner/view/:userId/:courseId/:formId" element={<QRView />} />
+                <Route
+                  path="/qrscanner/view/:userId/:courseId/:formId"
+                  element={<QRView />}
+                />
                 <Route path="/" element={<Navigate to="/qrscanner" />} />
                 <Route path="*" element={<Navigate to="/qrscanner" />} />
               </Routes>
@@ -73,10 +76,16 @@ const App = () => {
         </>
       ) : (
         <Routes>
-          <Route 
-  path="/" 
-  element={isAuthenticated ? <Navigate to="/qrscanner" replace /> : <Login onLogin={handleSuccessfulLogin} />} 
-/>
+          <Route
+            path="/"
+            element={
+              isAuthenticated ? (
+                <Navigate to="/qrscanner" replace />
+              ) : (
+                <Login onLogin={handleSuccessfulLogin} />
+              )
+            }
+          />
 
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
