@@ -13,6 +13,13 @@ function Login({ onLogin }) {
 
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/qrscanner');
+    }
+  }, [navigate]);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
