@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactQRScanner from 'react-qr-scanner';
-import { FiCamera, FiCheckCircle, FiXCircle, FiLink, FiRotateCw } from 'react-icons/fi';
+import { FiCamera, FiCheckCircle, FiLink, FiRotateCw } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 import './QRScanner.css';
 
 export default function QRScanner() {
@@ -10,16 +11,17 @@ export default function QRScanner() {
   const [cameraFacingMode, setCameraFacingMode] = useState('environment');
   const [permissionDenied, setPermissionDenied] = useState(false);
 
-  const handleScan = (data) => {
+  const navigate = useNavigate(); // Initialize navigate hook
 
+  const handleScan = (data) => {
     if (data && data.text) {
       setScannedData(data.text);
-      console.log(data.text)
+      console.log(data.text);
       setStatus('success');
       if (isValidUrl(data.text)) {
         setShowRedirect(true);
         setTimeout(() => {
-          window.location.href = data.text;
+          navigate(data.text); // Use navigate to redirect without reloading the page
         }, 2000);
       }
     }
