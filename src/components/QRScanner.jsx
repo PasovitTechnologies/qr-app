@@ -14,6 +14,7 @@ export default function QRScanner() {
 
     if (data && data.text) {
       setScannedData(data.text);
+      console.log(data.text)
       setStatus('success');
       if (isValidUrl(data.text)) {
         setShowRedirect(true);
