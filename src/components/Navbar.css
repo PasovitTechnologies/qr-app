@@ -2,29 +2,34 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
+    background-color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
   }
   
   .navbar-logo img {
     height: 40px;
   }
   
-  .navbar-actions {
+  .navbar-right {
     display: flex;
     align-items: center;
-    gap: 15px;
   }
   
-  .lang-btn, .logout-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
+  .logout-btn {
     display: flex;
     align-items: center;
-    gap: 5px;
-    color: #333;
+    background-color: #e53e3e;
+    color: white;
+    padding: 0.4rem 0.4rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+  }
+  
+  .logout-btn:hover {
+    background-color: #c53030;
   }
   
