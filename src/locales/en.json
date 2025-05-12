@@ -1,0 +1,44 @@
+{
+    "welcome": "Welcome Back",
+    "email": "Email",
+    "password": "Password",
+    "enterEmail": "Enter your email",
+    "enterPassword": "Enter your password",
+    "login": "Login",
+    "loggingIn": "Logging in...",
+    "invalidCredentials": "Invalid email or password",
+    "networkError": "Network error. Please try again.",
+
+
+
+
+
+    "qrScanner": "QR Code Scanner",
+  "pointCamera": "Point your camera at a QR code",
+  "qrScanned": "QR Code Scanned",
+  "redirecting": "Redirecting to URL...",
+  "switchCamera": "Switch Camera",
+  "scanAnother": "Scan Another",
+  "scannedContent": "Scanned Content",
+
+  "verification": {
+    "title": "Member Verification",
+    "tabs": {
+      "overview": "Overview",
+      "course": "Course",
+      "payment": "Payment"
+    },
+    "overview": {
+      "courseDetails": "Course Details",
+      "courseName": "Course Name",
+      "paymentStatus": "Payment Status",
+      "status": "Status",
+      "package": "Package",
+      "amount": "Amount"
+    },
+    "loading": "Verifying credentials...",
+    "failed": "Verification Failed",
+    "retry": "Scan Again"
+  }
+  }
+  

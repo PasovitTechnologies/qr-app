@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 import { 
   FiUser, FiBook, FiDollarSign, 
   FiCheckCircle, FiXCircle, FiClock,
   FiCalendar, FiCreditCard, FiPackage
 } from "react-icons/fi";
 import "./QRView.css";
+import i18n from "../i18n";
 
 const QRView = () => {
   const { userId, courseId, formId } = useParams();
@@ -20,6 +22,7 @@ const QRView = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const token = localStorage.getItem("token");
   const baseUrl = import.meta.env.VITE_BASE_URL;
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -124,7 +127,7 @@ const QRView = () => {
       <div className="loading-container">
         <div className="loading-animation">
           <div className="loading-spinner"></div>
-          <p>Verifying credentials...</p>
+          <p>{t("verification.loading")}</p>
         </div>
       </div>
     );
@@ -137,13 +140,13 @@ const QRView = () => {
           <div className="error-icon">
             <FiXCircle />
           </div>
-          <h2>Verification Failed</h2>
+          <h2>{t("verification.failed")}</h2>
           <p>{error}</p>
           <button 
             onClick={() => window.location.reload()}
             className="retry-btn"
           >
-            Scan Again
+            {t("verification.retry")}
           </button>
         </div>
       </div>
@@ -175,7 +178,7 @@ const QRView = () => {
       {/* Header */}
       <header className="dashboard-header">
         <div className="header-content">
-          <h1>Member Verification</h1>
+          <h1>{t("verification.title")}</h1>
         </div>
       </header>
 
@@ -210,19 +213,19 @@ const QRView = () => {
           className={`tab-btn ${activeTab === "overview" ? "active" : ""}`}
           onClick={() => setActiveTab("overview")}
         >
-          Overview
+          {t("verification.tabs.overview")}
         </button>
         <button 
           className={`tab-btn ${activeTab === "course" ? "active" : ""}`}
           onClick={() => setActiveTab("course")}
         >
-          Course
+          {t("verification.tabs.course")}
         </button>
         <button 
           className={`tab-btn ${activeTab === "payment" ? "active" : ""}`}
           onClick={() => setActiveTab("payment")}
         >
-          Payment
+          {t("verification.tabs.payment")}
         </button>
       </nav>
 
@@ -233,12 +236,12 @@ const QRView = () => {
             <div className="overview-card">
               <div className="card-header">
                 <FiBook />
-                <h3>Course Details</h3>
+                <h3>{t("verification.overview.courseDetails")}</h3>
               </div>
               <div className="card-body">
                 {courseName && (
                   <div className="info-row">
-                    <span>Course Name:</span>
+                    <span>{t("verification.overview.courseName")}:</span>
                     <span>{courseName}</span>
                   </div>
                 )}
@@ -248,21 +251,21 @@ const QRView = () => {
             <div className="overview-card">
               <div className="card-header">
                 <FiDollarSign />
-                <h3>Payment Status</h3>
+                <h3>{t("verification.overview.paymentStatus")}</h3>
               </div>
               <div className="card-body">
                 {paymentInfo ? (
                   <>
                     <div className="info-row">
-                      <span>Status:</span>
+                      <span>{t("verification.overview.status")}:</span>
                       <StatusPill status={paymentInfo.status} />
                     </div>
                     <div className="info-row">
-                      <span>Package:</span>
+                      <span>{t("verification.overview.package")}:</span>
                       <span>{paymentInfo.package}</span>
                     </div>
                     <div className="info-row">
-                      <span>Amount:</span>
+                      <span>{t("verification.overview.amount")}:</span>
                       <span>{paymentInfo.amount} {paymentInfo.currency}</span>
                     </div>
                   </>

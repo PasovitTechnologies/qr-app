@@ -4,6 +4,8 @@ import Login from './components/Login';
 import QRScanner from './components/QRScanner';
 import QRView from './components/QRView';
 import Navbar from './components/Navbar';
+import "./i18n";
+
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));

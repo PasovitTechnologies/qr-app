@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactQRScanner from "react-qr-scanner";
+import { useTranslation } from "react-i18next";
+
 import {
   FiCamera,
   FiCheckCircle,
@@ -16,6 +18,7 @@ export default function QRScanner() {
   const [showRedirect, setShowRedirect] = useState(false);
   const [cameraFacingMode, setCameraFacingMode] = useState("environment");
   const [permissionDenied, setPermissionDenied] = useState(false);
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -92,9 +95,9 @@ export default function QRScanner() {
       <div className="qr-scanner-header">
         <h2>
           <FiCamera className="header-icon" />
-          <span>QR Code Scanner</span>
+          <span>{t("qrScanner")}</span>
         </h2>
-        <p className="instruction-text">Point your camera at a QR code</p>
+        <p className="instruction-text">{t("pointCamera")}</p>
       </div>
 
       <div className="qr-scanner-video-container">
@@ -103,11 +106,11 @@ export default function QRScanner() {
           {status === "success" && (
             <div className="qr-scanner-success animate-pop">
               <FiCheckCircle className="success-icon" />
-              <p>QR Code Scanned</p>
+              <p>{t("qrScanned")}</p>
               {showRedirect && (
                 <div className="qr-redirect-notice animate-pulse">
                   <FiLink className="link-icon" />
-                  <p>Redirecting to URL...</p>
+                  <p>{t("redirecting")}</p>
                 </div>
               )}
             </div>
@@ -143,14 +146,14 @@ export default function QRScanner() {
           onClick={toggleCamera} 
           className="control-button camera-toggle"
         >
-          <FiRotateCw /> Switch Camera
+          <FiRotateCw /> {t("switchCamera")}
         </button>
         {status === "success" && (
           <button 
             onClick={resetScanner} 
             className="control-button scan-again"
           >
-            Scan Another
+            {t("scanAnother")}
           </button>
         )}
 
@@ -158,7 +161,7 @@ export default function QRScanner() {
 
       {scannedData && !showRedirect && (
         <div className="qr-scanner-result animate-fade-in">
-          <h3>Scanned Content</h3>
+          <h3>{t("scannedContent")}</h3>
           <div className="result-content">
             {scannedData}
           </div>

@@ -1,0 +1,42 @@
+{
+    "welcome": "С возвращением",
+    "email": "Эл. почта",
+    "password": "Пароль",
+    "enterEmail": "Введите вашу эл. почту",
+    "enterPassword": "Введите ваш пароль",
+    "login": "Войти",
+    "loggingIn": "Вход...",
+    "invalidCredentials": "Неверный адрес эл. почты или пароль",
+    "networkError": "Ошибка сети. Попробуйте снова.",
+
+
+
+    "qrScanner": "Сканер QR-кодов",
+  "pointCamera": "Наведите камеру на QR-код",
+  "qrScanned": "QR-код отсканирован",
+  "redirecting": "Переход по ссылке...",
+  "switchCamera": "Переключить камеру",
+  "scanAnother": "Сканировать снова",
+  "scannedContent": "Содержимое QR-кода",
+
+  "verification": {
+    "title": "Проверка участника",
+    "tabs": {
+      "overview": "Обзор",
+      "course": "Курс",
+      "payment": "Оплата"
+    },
+    "overview": {
+      "courseDetails": "Информация о курсе",
+      "courseName": "Название курса",
+      "paymentStatus": "Статус оплаты",
+      "status": "Статус",
+      "package": "Пакет",
+      "amount": "Сумма"
+    },
+    "loading": "Проверка данных...",
+    "failed": "Ошибка проверки",
+    "retry": "Сканировать снова"
+  }
+  }
+  
