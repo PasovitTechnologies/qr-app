@@ -344,6 +344,36 @@
   animation: fade-in 0.5s ease-out;
 }
 
+@media (max-width: 480px) {
+  .qr-scanner-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .qr-scanner-video-container {
+    max-width: 300px;
+    height: 250px;
+  }
+
+  .scanner-frame {
+    width: 85%;
+    height: 85%;
+  }
+
+  .control-button {
+    padding: 8px 14px;
+    font-size: 0.7rem;
+  }
+
+  .qr-scanner-result {
+    max-width: 320px;
+  }
+
+  .result-content {
+    font-size: 0.85rem;
+  }
+
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -353,4 +383,6 @@
     opacity: 1;
     transform: translateY(0);
   }
+
 }
+
