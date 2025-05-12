@@ -354,5 +354,8 @@
         font-weight: 900;
         margin-bottom: 0.25rem;
       }
+      .verification-dashboard {        
+        margin-top: 40px;
+      }
 
   }

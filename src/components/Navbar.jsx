@@ -22,18 +22,6 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
         />
       </div>
 
-      {/* Right side */}
-      <div className="navbar-actions">
-        <button onClick={toggleLanguage} className="lang-btn" title="Switch Language">
-          <FiGlobe />
-          <span>{lang.toUpperCase()}</span>
-        </button>
-        {isLoggedIn && (
-          <button onClick={onLogout} className="logout-btn" title="Logout">
-            <FiLogOut />
-          </button>
-        )}
-      </div>
     </nav>
   );
 };
