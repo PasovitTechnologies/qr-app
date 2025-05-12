@@ -1,18 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ReactQRScanner from 'react-qr-scanner';
-import { FiCamera, FiCheckCircle, FiXCircle, FiLink, FiRotateCw } from 'react-icons/fi';
-import './QRScanner.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import ReactQRScanner from "react-qr-scanner";
+import {
+  FiCamera,
+  FiCheckCircle,
+  FiXCircle,
+  FiLink,
+  FiRotateCw,
+} from "react-icons/fi";
+import "./QRScanner.css";
 
 export default function QRScanner() {
-  const [status, setStatus] = useState('loading');
+  const [status, setStatus] = useState("loading");
   const [scannedData, setScannedData] = useState(null);
   const [showRedirect, setShowRedirect] = useState(false);
-  const [cameraFacingMode, setCameraFacingMode] = useState('environment');
+  const [cameraFacingMode, setCameraFacingMode] = useState("environment");
   const [permissionDenied, setPermissionDenied] = useState(false);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  
   useEffect(() => {
     if (!token) {
       navigate("/", { replace: true });
@@ -21,32 +28,30 @@ export default function QRScanner() {
 
   // Prevent back navigation
   useEffect(() => {
-    window.history.pushState(null, '', window.location.href);
+    window.history.pushState(null, "", window.location.href);
 
     const handlePopState = () => {
-      window.history.pushState(null, '', window.location.href);
+      window.history.pushState(null, "", window.location.href);
     };
 
-    window.addEventListener('popstate', handlePopState);
+    window.addEventListener("popstate", handlePopState);
 
     return () => {
-      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener("popstate", handlePopState);
     };
   }, []);
 
   const handleScan = (data) => {
     if (data && data.text) {
       setScannedData(data.text);
-      setStatus('success');
+      setStatus("success");
 
       if (isValidUrl(data.text)) {
         setShowRedirect(true);
         setTimeout(() => {
-          if (data.text.startsWith('http') || data.text.startsWith('https')) {
-            // Full URL (external)
+          if (data.text.startsWith("http") || data.text.startsWith("https")) {
             window.location.href = data.text;
           } else {
-            // Relative path (internal)
             navigate(data.text);
           }
         }, 2000);
@@ -55,16 +60,15 @@ export default function QRScanner() {
   };
 
   const handleError = (err) => {
-    console.error('QR Scan Error:', err);
-    setStatus('error');
+    console.error("QR Scan Error:", err);
+    setStatus("error");
     setPermissionDenied(true);
   };
 
   const isValidUrl = (string) => {
     try {
-      // Accept internal routes as well (like "/qrscanner/view/...")
-      if (string.startsWith('/')) return true;
-      new URL(string); // Check if it's a valid absolute URL
+      if (string.startsWith("/")) return true;
+      new URL(string);
       return true;
     } catch (_) {
       return false;
@@ -72,32 +76,53 @@ export default function QRScanner() {
   };
 
   const toggleCamera = () => {
-    setCameraFacingMode((prev) => (prev === 'environment' ? 'user' : 'environment'));
+    setCameraFacingMode((prev) =>
+      prev === "environment" ? "user" : "environment"
+    );
+  };
+
+  const resetScanner = () => {
+    setStatus("loading");
+    setScannedData(null);
+    setShowRedirect(false);
   };
 
   return (
     <div className="qr-scanner-container">
       <div className="qr-scanner-header">
-        <h2><FiCamera /> QR Code Scanner</h2>
-        <p>Point your camera at a QR code</p>
+        <h2>
+          <FiCamera className="header-icon" />
+          <span>QR Code Scanner</span>
+        </h2>
+        <p className="instruction-text">Point your camera at a QR code</p>
       </div>
 
       <div className="qr-scanner-video-container">
-        <div className="qr-scanner-overlay">
-          {status === 'loading' && <p>Loading camera...</p>}
+        <div className={`qr-scanner-overlay ${status}`}>
 
-          {status === 'success' && (
-            <div className="qr-scanner-success">
+          {status === "success" && (
+            <div className="qr-scanner-success animate-pop">
               <FiCheckCircle className="success-icon" />
               <p>QR Code Scanned</p>
               {showRedirect && (
-                <div className="qr-redirect-notice">
+                <div className="qr-redirect-notice animate-pulse">
                   <FiLink className="link-icon" />
                   <p>Redirecting to URL...</p>
                 </div>
               )}
             </div>
           )}
+
+          
+
+          {/* Scanner frame overlay */}
+          <div className="scanner-frame">
+            <div className="frame-corner top-left"></div>
+            <div className="frame-corner top-right"></div>
+            <div className="frame-corner bottom-left"></div>
+            <div className="frame-corner bottom-right"></div>
+            <div className="scan-line"></div>
+          </div>
         </div>
 
         <ReactQRScanner
@@ -105,22 +130,38 @@ export default function QRScanner() {
           onScan={handleScan}
           onError={handleError}
           constraints={{
-            video: { facingMode: { exact: cameraFacingMode } }
+            video: { facingMode: { exact: cameraFacingMode } },
           }}
-          style={{ width: '100%', height: 'auto' }}
+          style={{ width: "100%", height: "400px" }}
           key={cameraFacingMode}
+          className="qr-scanner"
         />
       </div>
 
       <div className="qr-scanner-controls">
-        <button onClick={toggleCamera}><FiRotateCw /> Switch Camera</button>
-        {status === 'success' && <button onClick={() => setStatus('loading')}>Scan Another</button>}
+        <button 
+          onClick={toggleCamera} 
+          className="control-button camera-toggle"
+        >
+          <FiRotateCw /> Switch Camera
+        </button>
+        {status === "success" && (
+          <button 
+            onClick={resetScanner} 
+            className="control-button scan-again"
+          >
+            Scan Another
+          </button>
+        )}
+
       </div>
 
       {scannedData && !showRedirect && (
-        <div className="qr-scanner-result">
-          <h3>Raw QR Code Content</h3>
-          <p>{scannedData}</p>
+        <div className="qr-scanner-result animate-fade-in">
+          <h3>Scanned Content</h3>
+          <div className="result-content">
+            {scannedData}
+          </div>
         </div>
       )}
     </div>
