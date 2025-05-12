@@ -18,11 +18,19 @@ export default function QRScanner() {
       setScannedData(data.text);
       console.log(data.text);
       setStatus('success');
+
       if (isValidUrl(data.text)) {
-        setShowRedirect(true);
-        setTimeout(() => {
-          navigate(data.text); // Use navigate to redirect without reloading the page
-        }, 2000);
+        // Check if the scanned URL is not the same as the current page URL
+        const currentPageUrl = window.location.href;
+        if (!data.text.includes('qrscanner')) {
+          setShowRedirect(true);
+          setTimeout(() => {
+            navigate(data.text); // Use navigate to redirect without reloading the page
+          }, 2000);
+        } else {
+          // Prevent redirection if it's the same URL
+          console.log('Skipping redirection to avoid loop');
+        }
       }
     }
   };
