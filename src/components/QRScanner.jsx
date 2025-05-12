@@ -18,24 +18,11 @@ export default function QRScanner() {
       setScannedData(data.text);
       console.log(data.text);
       setStatus('success');
-
-      // Check if the URL is valid
       if (isValidUrl(data.text)) {
-        // Check if the scanned URL is not the same as the current page URL
-        const currentPageUrl = window.location.href;
-        if (data.text !== currentPageUrl) {
-          setShowRedirect(true);
-          setTimeout(() => {
-            // If the URL is an external one, use window.location.href
-            if (isExternalUrl(data.text)) {
-              window.location.href = data.text; // External URL
-            } else {
-              navigate(data.text); // For internal navigation
-            }
-          }, 2000);
-        } else {
-          console.log('Scanned URL is the same as the current page. Skipping redirection.');
-        }
+        setShowRedirect(true);
+        setTimeout(() => {
+          navigate(data.text); // Use navigate to redirect without reloading the page
+        }, 2000);
       }
     }
   };
@@ -53,13 +40,6 @@ export default function QRScanner() {
     } catch (_) {
       return false;
     }
-  };
-
-  const isExternalUrl = (url) => {
-    // Check if the URL is external (different domain)
-    const currentDomain = window.location.hostname;
-    const urlObj = new URL(url);
-    return urlObj.hostname !== currentDomain;
   };
 
   const toggleCamera = () => {
