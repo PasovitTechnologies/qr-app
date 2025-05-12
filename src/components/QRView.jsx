@@ -34,6 +34,8 @@ const QRView = () => {
   }, [navigate, location]);
 
   useEffect(() => {
+    let imageUrl; // Hold the blob URL for cleanup
+  
     const fetchData = async () => {
       try {
         if (userId && courseId) {
@@ -51,7 +53,7 @@ const QRView = () => {
             setPaymentInfo(course.payments[0]);
           }
   
-          // Fetch only course title
+          // Fetch course name
           const lang = localStorage.getItem("dashboardLang") || "en";
           try {
             const courseResponse = await axios.get(`${baseUrl}/api/courses/${courseId}/getName`, {
@@ -81,28 +83,18 @@ const QRView = () => {
           setQrDetails({ user, course });
   
           // Fetch user image if email exists
-          let imageUrl; // to hold created object URL
-
-if (user.email) {
-  try {
-    const imageResponse = await fetch(`${baseUrl}/api/user/image/${user.email}`);
-    if (imageResponse.ok) {
-      const imageBlob = await imageResponse.blob();
-      imageUrl = URL.createObjectURL(imageBlob);
-      setImage(imageUrl);
-    }
-  } catch (imageError) {
-    console.error("Error fetching user image:", imageError);
-  }
-}
-
-// then in cleanup
-return () => {
-  if (imageUrl) {
-    URL.revokeObjectURL(imageUrl);
-  }
-};
-
+          if (user.email) {
+            try {
+              const imageResponse = await fetch(`${baseUrl}/api/user/image/${user.email}`);
+              if (imageResponse.ok) {
+                const imageBlob = await imageResponse.blob();
+                imageUrl = URL.createObjectURL(imageBlob);
+                setImage(imageUrl);
+              }
+            } catch (imageError) {
+              console.error("Error fetching user image:", imageError);
+            }
+          }
         }
       } catch (err) {
         console.error("Error fetching QR details:", err);
@@ -114,13 +106,12 @@ return () => {
   
     fetchData();
   
-    // Cleanup function to revoke the object URL when component unmounts
     return () => {
-      if (image) {
-        URL.revokeObjectURL(image);
+      if (imageUrl) {
+        URL.revokeObjectURL(imageUrl);
       }
     };
-  }, [userId, courseId, baseUrl, token, image]); // Added image to dependencies
+  }, [userId, courseId, baseUrl, token]);  // ✅ image removed
   
   if (loading) {
     return (
