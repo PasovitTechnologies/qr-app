@@ -12,6 +12,12 @@ export default function QRScanner() {
   const [permissionDenied, setPermissionDenied] = useState(false);
 
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    if (!token) {
+      navigate("/", { replace: true });
+    }
+  }, [token, navigate]);
 
   // Prevent back navigation
   useEffect(() => {
