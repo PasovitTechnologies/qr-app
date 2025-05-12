@@ -10,27 +10,36 @@ const App = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token);
+    setIsAuthenticated(!!token); // Set auth state based on token
   }, []);
 
   return (
     <div>
       <Navbar />
       <Routes>
-        <Route 
-          path="/" 
-          element={isAuthenticated ? <QRScanner /> : <LoginWrapper setIsAuthenticated={setIsAuthenticated} />} 
+        {/* Home route */}
+        <Route
+          path="/"
+          element={isAuthenticated ? <Navigate to="/qrscanner" /> : <LoginWrapper setIsAuthenticated={setIsAuthenticated} />}
         />
-        <Route 
-          path="/qrscanner/view/:userId/:courseId/:formId" 
-          element={isAuthenticated ? <QRView /> : <Navigate to="/" />} 
+
+        {/* Protected route for QRScanner */}
+        <Route
+          path="/qrscanner"
+          element={isAuthenticated ? <QRScanner /> : <Navigate to="/" />}
+        />
+
+        {/* Protected route for QRView */}
+        <Route
+          path="/qrscanner/view/:userId/:courseId/:formId"
+          element={isAuthenticated ? <QRView /> : <Navigate to="/" />}
         />
       </Routes>
     </div>
   );
 };
 
-// Wrapper to pass auth state setter to Login
+// Wrapper to pass authentication state setter to Login
 const LoginWrapper = ({ setIsAuthenticated }) => (
   <Login onLogin={() => setIsAuthenticated(true)} />
 );

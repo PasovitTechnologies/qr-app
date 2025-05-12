@@ -17,26 +17,26 @@ function Login({ onLogin }) {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-
+  
     try {
       const response = await fetch(`${baseUrl}/api/qr/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-
+  
       const result = await response.json();
-
+  
       if (response.ok && result.success) {
+        // Save user info to localStorage
         localStorage.setItem('token', result.token);
         localStorage.setItem('userEmail', result.user.email);
         localStorage.setItem('userRole', result.user.role);
-
-        if (onLogin) {
-          onLogin(); // 👈 Notify App.jsx of successful login
-        }
-
-        navigate('/'); // Optional if your route config shows QRScanner at "/"
+  
+        // Trigger the login state update in App.jsx
+        onLogin();  // This triggers the navigation to /qrscanner
+  
+        navigate('/qrscanner');  // Redirect to QRScanner after login
       } else {
         setError(result.message || 'Invalid email or password');
       }
@@ -46,6 +46,7 @@ function Login({ onLogin }) {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="login-container">
