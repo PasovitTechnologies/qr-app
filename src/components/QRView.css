@@ -190,11 +190,13 @@
     font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 0.25rem;
+    text-align: center;
   }
   
   .member-id {
     font-size: 0.875rem;
     color: var(--text-secondary);
+    text-align: center;
   }
   
   /* Tabs Navigation */
