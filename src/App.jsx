@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import QRScanner from './components/QRScanner';
@@ -6,20 +6,21 @@ import QRView from './components/QRView';
 import Navbar from './components/Navbar';
 
 const App = () => {
-  // Check if the user is logged in by checking if the token exists in localStorage
-  const isAuthenticated = Boolean(localStorage.getItem('token')); // Will be true if the token exists
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token);
+  }, []);
 
   return (
     <div>
       <Navbar />
       <Routes>
-        {/* If authenticated, show QRScanner and QRView */}
         <Route 
           path="/" 
-          element={isAuthenticated ? <><QRScanner /></> : <Login />} 
+          element={isAuthenticated ? <QRScanner /> : <LoginWrapper setIsAuthenticated={setIsAuthenticated} />} 
         />
-        
-        {/* Protected route for QRView */}
         <Route 
           path="/qrscanner/view/:userId/:courseId/:formId" 
           element={isAuthenticated ? <QRView /> : <Navigate to="/" />} 
@@ -28,5 +29,10 @@ const App = () => {
     </div>
   );
 };
+
+// Wrapper to pass auth state setter to Login
+const LoginWrapper = ({ setIsAuthenticated }) => (
+  <Login onLogin={() => setIsAuthenticated(true)} />
+);
 
 export default App;

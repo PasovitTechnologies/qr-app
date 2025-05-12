@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-function Login() {
+function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -28,12 +28,15 @@ function Login() {
       const result = await response.json();
 
       if (response.ok && result.success) {
-        // ✅ Save token to localStorage
         localStorage.setItem('token', result.token);
         localStorage.setItem('userEmail', result.user.email);
         localStorage.setItem('userRole', result.user.role);
-        // 🔁 Redirect to scanner
-        navigate('/');
+
+        if (onLogin) {
+          onLogin(); // 👈 Notify App.jsx of successful login
+        }
+
+        navigate('/'); // Optional if your route config shows QRScanner at "/"
       } else {
         setError(result.message || 'Invalid email or password');
       }
@@ -81,8 +84,8 @@ function Login() {
 
           {error && <p className="error-message">{error}</p>}
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="login-btn"
             disabled={isLoading}
           >
