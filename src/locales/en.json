@@ -39,6 +39,22 @@
     "loading": "Verifying credentials...",
     "failed": "Verification Failed",
     "retry": "Scan Again"
-  }
+  },
+  "course": {
+      "title": "Course Information",
+      "id": "Course ID",
+      "name": "Course Name"
+    },
+    "payment": {
+      "title": "Payment Information",
+      "status": "Status",
+      "package": "Package",
+      "amount": "Amount",
+      "noRecords": "No payment records found for this course"
+    },
+    "common": {
+      "na": "N/A"
+    }
+
   }
   

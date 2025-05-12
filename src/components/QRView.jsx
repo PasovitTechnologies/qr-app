@@ -277,56 +277,56 @@ const QRView = () => {
           </div>
         )}
 
-        {activeTab === "course" && (
-          <div className="course-details">
-            <h3>Course Information</h3>
-            <div className="detail-card">
-              <div className="detail-item">
-                <span className="detail-label">Course ID</span>
-                <span className="detail-value">{courseId || "N/A"}</span>
-              </div>
-              {courseName && (
-                <div className="detail-item">
-                  <span className="detail-label">Course Name</span>
-                  <span className="detail-value">{courseName}</span>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+{activeTab === "course" && (
+  <div className="course-details">
+    <h3>{t("verification.course.title")}</h3>
+    <div className="detail-card">
+      <div className="detail-item">
+        <span className="detail-label">{t("verification.course.id")}</span>
+        <span className="detail-value">{courseId || t("verification.common.na")}</span>
+      </div>
+      {courseName && (
+        <div className="detail-item">
+          <span className="detail-label">{t("verification.course.name")}</span>
+          <span className="detail-value">{courseName}</span>
+        </div>
+      )}
+    </div>
+  </div>
+)}
 
-        {activeTab === "payment" && (
-          <div className="payment-details">
-            <h3>Payment Information</h3>
-            {paymentInfo ? (
-              <div className="detail-card">
-                <div className="detail-item">
-                  <span className="detail-label">Status</span>
-                  <span className="detail-value">
-                    <StatusPill status={paymentInfo.status} />
-                  </span>
-                </div>
-                <div className="detail-item">
-                  <span className="detail-label">Package</span>
-                  <span className="detail-value">
-                    <FiPackage /> {paymentInfo.package}
-                  </span>
-                </div>
-                <div className="detail-item">
-                  <span className="detail-label">Amount</span>
-                  <span className="detail-value">
-                    <FiDollarSign /> {paymentInfo.amount} {paymentInfo.currency}
-                  </span>
-                </div>
-                
-              </div>
-            ) : (
-              <div className="no-data">
-                No payment records found for this course
-              </div>
-            )}
-          </div>
-        )}
+{activeTab === "payment" && (
+  <div className="payment-details">
+    <h3>{t("verification.payment.title")}</h3>
+    {paymentInfo ? (
+      <div className="detail-card">
+        <div className="detail-item">
+          <span className="detail-label">{t("verification.payment.status")}</span>
+          <span className="detail-value">
+            <StatusPill status={paymentInfo.status} />
+          </span>
+        </div>
+        <div className="detail-item">
+          <span className="detail-label">{t("verification.payment.package")}</span>
+          <span className="detail-value">
+            <FiPackage /> {paymentInfo.package}
+          </span>
+        </div>
+        <div className="detail-item">
+          <span className="detail-label">{t("verification.payment.amount")}</span>
+          <span className="detail-value">
+            <FiDollarSign /> {paymentInfo.amount} {paymentInfo.currency}
+          </span>
+        </div>
+      </div>
+    ) : (
+      <div className="no-data">
+        {t("verification.payment.noRecords")}
+      </div>
+    )}
+  </div>
+)}
+
       </main>
     </div>
   );
