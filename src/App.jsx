@@ -12,26 +12,39 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
-  // Check if token is valid
+  // Improved token validator with logging
   const isTokenValid = () => {
     const token = localStorage.getItem("token");
-    if (!token) return false;
+    if (!token) {
+      console.warn("Token missing from localStorage");
+      return false;
+    }
 
     try {
       const decoded = jwtDecode(token);
-      return decoded.exp > Date.now() / 1000;
-    } catch {
+      const currentTime = Date.now() / 1000;
+      const timeLeft = decoded.exp - currentTime;
+
+      console.log(`Token expires in ${Math.floor(timeLeft)} seconds`);
+
+      // Consider invalid if token is expiring very soon
+      if (timeLeft < 60) {
+        console.warn("Token is about to expire (under 60s)");
+        return false;
+      }
+
+      return decoded.exp > currentTime;
+    } catch (error) {
+      console.error("Token decoding error:", error);
       return false;
     }
   };
 
-  // Check authentication status
   const checkAuthentication = () => {
     const role = localStorage.getItem("userRole");
     return isTokenValid() && role === "admin";
   };
 
-  // Handle successful login
   const handleSuccessfulLogin = () => {
     setIsAuthenticated(true);
     navigate("/qrscanner");
@@ -41,14 +54,18 @@ const App = () => {
     setIsAuthenticated(checkAuthentication());
 
     const interval = setInterval(() => {
-      if (!isTokenValid()) {
+      const valid = isTokenValid();
+      console.log("Periodic token check - valid:", valid);
+
+      if (!valid) {
+        console.warn("Token expired or invalid. Logging out.");
         setIsAuthenticated(false);
         localStorage.removeItem("token");
         localStorage.removeItem("userRole");
         localStorage.removeItem("userEmail");
         navigate("/");
       }
-    }, 60000);
+    }, 60000); // every 60 seconds
 
     return () => clearInterval(interval);
   }, []);
@@ -86,7 +103,6 @@ const App = () => {
               )
             }
           />
-
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       )}
