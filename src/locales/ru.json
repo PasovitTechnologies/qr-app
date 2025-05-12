@@ -21,6 +21,7 @@
 
   "verification": {
     "title": "Проверка участника",
+    "backToScanner": "Вернуться к сканеру",
     "tabs": {
       "overview": "Обзор",
       "course": "Курс",

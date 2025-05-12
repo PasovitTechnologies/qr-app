@@ -23,6 +23,7 @@
 
   "verification": {
     "title": "Member Verification",
+    "backToScanner": "Back to Scanner",
     "tabs": {
       "overview": "Overview",
       "course": "Course",
