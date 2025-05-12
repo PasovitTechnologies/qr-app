@@ -110,6 +110,7 @@
     min-height: 100vh;
     margin-top: 60px;
     background-color: var(--card-bg);
+    padding: 10px;
   }
   .back-to-scanner-btn {
     background-color: #033672;
