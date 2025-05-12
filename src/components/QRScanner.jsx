@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ReactQRScanner from 'react-qr-scanner';
 import { FiCamera, FiCheckCircle, FiXCircle, FiLink, FiRotateCw } from 'react-icons/fi';
 import './QRScanner.css';
@@ -10,8 +11,24 @@ export default function QRScanner() {
   const [cameraFacingMode, setCameraFacingMode] = useState('environment');
   const [permissionDenied, setPermissionDenied] = useState(false);
 
-  const handleScan = (data) => {
+  const navigate = useNavigate();
 
+  // Prevent back navigation
+  useEffect(() => {
+    window.history.pushState(null, '', window.location.href);
+
+    const handlePopState = () => {
+      window.history.pushState(null, '', window.location.href);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
+  const handleScan = (data) => {
     if (data && data.text) {
       setScannedData(data.text);
       setStatus('success');
@@ -68,7 +85,6 @@ export default function QRScanner() {
           )}
         </div>
 
-        {/* Updated Scanner Component with facingMode constraints */}
         <ReactQRScanner
           delay={300}
           onScan={handleScan}
