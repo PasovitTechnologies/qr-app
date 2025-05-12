@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { 
   FiUser, FiBook, FiDollarSign, 
   FiCheckCircle, FiXCircle, FiClock,
-  FiCalendar, FiCreditCard, FiPackage
+  FiCalendar, FiCreditCard, FiPackage, FiArrowLeft
 } from "react-icons/fi";
 import "./QRView.css";
 import i18n from "../i18n";
@@ -176,6 +176,13 @@ const QRView = () => {
   return (
     <div className="verification-dashboard">
       {/* Header */}
+
+      <button 
+        className="back-to-scanner-btn" 
+        onClick={() => navigate("/qrscanner")}
+      >
+        <FiArrowLeft /> {t("verification.backToScanner")}
+      </button>
       <header className="dashboard-header">
         <div className="header-content">
           <h1>{t("verification.title")}</h1>

@@ -6,7 +6,7 @@ import "./Navbar.css";
 const Navbar = ({ isLoggedIn, onLogout }) => {
   return (
     <nav className="navbar">
-      <div className="navbar-logo" onClick={() => window.location.href = "/dashboard"}>
+      <div className="navbar-logo" onClick={() => window.location.href = "/qrscanner"}>
         <img
           src="https://static.wixstatic.com/media/e6f22e_a90a0fab7b764c24805e7e43d165d416~mv2.png"
           alt="Logo"
