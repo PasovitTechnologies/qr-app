@@ -177,7 +177,12 @@ const QRView = () => {
     <div className="verification-dashboard">
       {/* Header */}
 
-     
+      <button 
+        className="back-to-scanner-btn" 
+        onClick={() => navigate("/qrscanner")}
+      >
+        <FiArrowLeft /> {t("verification.backToScanner")}
+      </button>
       <header className="dashboard-header">
         <div className="header-content">
           <h1>{t("verification.title")}</h1>
