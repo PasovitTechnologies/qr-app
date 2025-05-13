@@ -55,6 +55,8 @@ body{
     transition: border 0.3s ease;
     width: 100%;
     box-sizing: border-box;
+    background-color: #fff;
+    color: #000;
   }
   
   .login-box input:focus {
